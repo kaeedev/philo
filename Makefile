@@ -10,14 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME:= pipex
+NAME:= philo
 CC:= cc
-CFLAGS:= -Wextra -Wall -Werror -g
+CFLAGS:= -Wextra -Wall -Werror -g -pthread
 
-SRCS:= $(shell find ./srcs -iname "*.c")
+SRCS:= $(shell find ./src -iname "*.c")
 OBJS:= ${SRCS:.c=.o}
 
-HEADERS:= -I ./includes -I 
+HEADERS:= -I .
 
 GREEN = \033[0;32m
 BLUE = \033[0;34m
@@ -26,9 +26,9 @@ NC = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(BLUE)Enlazando $@...$(NC)"
-	@$(CC) $(OBJS)
-	@echo "$(GREEN)✅ philosopher compile success!$(NC)"
+	@echo "$(BLUE)Creating executable $@...$(NC)"
+	@$(CC) $(OBJS) -o $(NAME) -pthread
+	@echo "$(GREEN)✅ $(NAME) compiled successfully!$(NC)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\r"
