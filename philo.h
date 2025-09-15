@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lalbe <lalbe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:44:52 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/09/12 14:09:07 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:53:03 by lalbe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 typedef struct s_philosopher
 {
 	int				id_philosopher; //identificador para cada filosofo
-	int 			count_meal_success; //numero de comidas completadas
+	int				count_meal_success; //numero de comidas completadas
 	int				id_fork_left; //indice del tenedor izquierdo
 	int				id_fork_right; //indice del tenedor derecho
 	long long		last_meal_time; //timestamp de la ultima comida
 	struct s_data	*data; //puntero a datos globales
-} t_philosopher;
+}	t_philosopher;
 
 typedef struct s_data
 {
@@ -60,7 +60,24 @@ typedef struct s_data
 	pthread_mutex_t	*forks; //array de mutex (uno por tenedor)
 	pthread_mutex_t	control_mutex; //protege variables de control
 	t_philosopher	*philosophers; //array de estructuras de filosofos
-} t_data;
+}	t_data;
 
-int	is_valid_number (char *str);
+int			is_valid_number(char *str);
+int			safe_atoi(char *str);
+int			validate_specific_range(t_data *data);
+int			get_value(char *argv);
+int			validate_arguments(int argc, char **argv);
+long long	get_current_time(void);
+long long	time_diff(long long start, long long end);
+void		precise_sleep(long long duration_ms);
+int			init_mutex(t_data *data);
+int			init_philosophers(t_data *data);
+int			init_simulation(t_data *data);
+int			allocate_memory(t_data *data);
+void		print_status(t_philosopher *philo, char *action);
+void		think_action(t_philosopher *philo);
+void		sleep_action(t_philosopher *philo);
+void		eat_action(t_philosopher *philo);
+int			is_simulation_over(t_philosopher *philo);
+void		*philosopher_routine(void *arg)
 #endif
