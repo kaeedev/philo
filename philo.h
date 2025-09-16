@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalbe <lalbe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:44:52 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/09/15 14:53:03 by lalbe            ###   ########.fr       */
+/*   Updated: 2025/09/16 13:49:25 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ void		print_status(t_philosopher *philo, char *action);
 void		think_action(t_philosopher *philo);
 void		sleep_action(t_philosopher *philo);
 void		eat_action(t_philosopher *philo);
-int			is_simulation_over(t_philosopher *philo);
-void		*philosopher_routine(void *arg)
+int			is_simulation_over(t_data *data);
+void		*philosopher_routine(void *arg);
+int			take_forks(t_philosopher *philo);
+void		drop_forks(t_philosopher *philo);
+int			check_philosopher_death(t_data *data);
+int			check_all_ate_enough(t_data *data);
+void		*monitor_routine(void *arg);
+void		cleanup(t_data *data);
+void		signal_stop(t_data *data);
+void		cleanup_partial_threads(t_data *data, int created_count);
 #endif

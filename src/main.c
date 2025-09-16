@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalbe <lalbe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:25:49 by lalbe             #+#    #+#             */
-/*   Updated: 2025/09/15 13:39:20 by lalbe            ###   ########.fr       */
+/*   Updated: 2025/09/16 13:44:01 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_data		data;
+	pthread_t	monitor_thread;
+	int		i;
 
 	if (!validate_arguments(argc, argv))
 		return (1);
@@ -33,4 +35,35 @@ int	main(int argc, char **argv)
 		perror("Initialization failed");
 		return (1);
 	}
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, &data) != 0)
+	{
+		perror("Failed to create monitor thread");
+		cleanup(&data);
+		return (1);
+	}
+	i = 0;
+	while (i < data.num_philosophers)
+	{
+		if (pthread_create(&data.threads[i], NULL, philosopher_routine, &data.philosophers[i]) != 0)
+		{
+			perror("Failed to create thread");
+			signal_stop(&data);
+			pthread_join(monitor_thread, NULL);
+			cleanup_partial_threads(&data, i);
+			cleanup(&data);
+			return (1);
+		}
+		i ++;
+	}
+	pthread_join(monitor_thread, NULL);
+	i = 0;
+	while (i < data.num_philosophers)
+	{
+		pthread_join(data.threads[i], NULL);
+		i ++;
+	}
+	cleanup(&data);
+	return (0);
 }
+
+
