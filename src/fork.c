@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:07:02 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/09/16 13:51:36 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:30:38 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	take_forks(t_philosopher *philo)
 {
 	if (philo->data->num_philosophers == 1)
 	{
-		pthread_mutex_lock(&philo->data->forks[philo->id_fork_left]);
 		print_status(philo, MSG_FORK);
 		return (0);
 	}

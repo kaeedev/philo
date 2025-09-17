@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:44:52 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/09/16 13:49:25 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:40:00 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ typedef struct s_data
 	t_philosopher	*philosophers; //array de estructuras de filosofos
 }	t_data;
 
+int			parse_arguments(int argc, char **argv, t_data *data);
+int			create_monitor_thread(t_data *data, pthread_t *monitor_thread);
+int			create_philosopher_threads(t_data *data, pthread_t *monitor_thread);
+void		join_all_threads(t_data *data, pthread_t *monitor_thread);
 int			is_valid_number(char *str);
 int			safe_atoi(char *str);
 int			validate_specific_range(t_data *data);
@@ -69,7 +73,7 @@ int			get_value(char *argv);
 int			validate_arguments(int argc, char **argv);
 long long	get_current_time(void);
 long long	time_diff(long long start, long long end);
-void		precise_sleep(long long duration_ms);
+void		precise_sleep(t_philosopher *philo, long duration_ms);
 int			init_mutex(t_data *data);
 int			init_philosophers(t_data *data);
 int			init_simulation(t_data *data);
@@ -77,7 +81,7 @@ int			allocate_memory(t_data *data);
 void		print_status(t_philosopher *philo, char *action);
 void		think_action(t_philosopher *philo);
 void		sleep_action(t_philosopher *philo);
-void		eat_action(t_philosopher *philo);
+int			eat_action(t_philosopher *philo);
 int			is_simulation_over(t_data *data);
 void		*philosopher_routine(void *arg);
 int			take_forks(t_philosopher *philo);

@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 14:45:51 by lalbe             #+#    #+#             */
-/*   Updated: 2025/09/16 13:48:48 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:26:09 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	check_philosopher_death(t_data *data)
 		time_without_eat = current_time - last_time_eat;
 		if (time_without_eat >= data->time_to_die)
 		{
+			print_status(&data->philosophers[i], MSG_DIE);
 			pthread_mutex_lock(&data->control_mutex);
 			data->dead_flag = TRUE;
 			pthread_mutex_unlock(&data->control_mutex);
-			print_status(&data->philosophers[i], MSG_DIE);
 			return (TRUE);
 		}
 		i ++;
@@ -90,7 +90,7 @@ void	*monitor_routine(void *arg)
 			break ;
 		if (check_all_ate_enough(data))
 			break ;
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }

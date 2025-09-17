@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:14:30 by lalbe             #+#    #+#             */
-/*   Updated: 2025/09/16 12:57:10 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:34:00 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	init_philosophers(t_data *data)
 	{
 		data->philosophers[i].id_philosopher = i + 1;
 		data->philosophers[i].count_meal_success = 0;
-		data->philosophers[i].last_meal_time = data->start_time;
+		data->philosophers[i].last_meal_time = get_current_time();
 		data->philosophers[i].data = data;
 		data->philosophers[i].id_fork_left = i;
 		data->philosophers[i].id_fork_right = (i + 1) % data->num_philosophers;
